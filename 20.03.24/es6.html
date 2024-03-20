@@ -1,0 +1,67 @@
+<!--
+    position: static;
+    Il posizionamento statico è il posizionamento predefinito per tutti gli elementi HTML. 
+    Ciò significa che gli elementi appariranno nell'ordine in cui sono scritti nel codice HTML, 
+    senza tener conto degli altri elementi sulla pagina. Come abbiamo provato più volte, 
+    semplicemente un elemento si colloca sopra l'altro.
+
+    position: relative;
+    Il posizionamento relativo consente di spostare un elemento rispetto alla sua posizione 
+    originale nel codice HTML. L'elemento viene posizionato secondo il normale flusso del 
+    documento e poi spostato rispetto a se stesso in base ai valori di top, right, bottom e left.
+    Lo spostamento non influisce sulla posizione di altri elementi; pertanto, lo spazio concesso 
+    all'elemento nel layout di pagina è lo stesso che si avrebbe se la posizione fosse statica.
+
+    position: absolute;
+    Il posizionamento assoluto consente di posizionare un elemento in una posizione precisa sulla 
+    pagina, indipendentemente dagli elementi circostanti. Utile per elementi che devono rimanere 
+    in una certa posizione a prescindere dal resto.
+
+    position: fixed;
+    Il posizionamento fisso è simile al posizionamento assoluto, ma l'elemento rimane in una 
+    posizione fissa sullo schermo anche quando l'utente scorre la pagina. Questo è utile per 
+    creare barre di navigazione persistenti o altri elementi che devono essere visibili in ogni 
+    momento.
+
+    position: sticky;
+    Il posizionamento sticky è un tipo di posizionamento relativo che consente a un elemento di 
+    "aderire" in alto alla schermata quando l'utente scorre oltre di esso. Questo è utile per 
+    creare intestazioni o barre di navigazione che devono essere visibili in ogni momento, ma 
+    devono anche spostarsi quando l'utente scorre la pagina.
+
+    51vh per lasciare spazio altrimenti attaccato
+-->
+<style>    
+        div {
+            height: 50vh;
+            width: 50vh;
+            position: absolute;
+          }
+          
+          #one{
+            background-color: red;
+            top: 0;
+            left: 0;
+          }
+           #two {
+            background-color: blue;
+            top: 0;
+            left: 51vh;
+          }
+          
+          #three {
+            background-color: blue;
+            top: 51vh;
+            left: 0;
+          }
+          
+          #four {
+            background-color: red;
+            top: 51vh;  
+            left: 51vh;
+          }
+</style>
+<div id="one"></div>
+<div id="two"></div>
+<div id="three"></div>
+<div id="four"></div>

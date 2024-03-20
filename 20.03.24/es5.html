@@ -1,0 +1,33 @@
+<!--
+    Nel dare le dimensioni che preferiamo ai font, è meglio usare em e rem.
+
+    font-family: specifica la famiglia di font che verranno applicati: di solito si indica un font primario, e poi dopo una virgola la famiglia di fallback
+    font-size: specifica la dimensione del font vedi sotto
+    font-weight: specifica il peso del font; ad es. normale, grassetto, leggero... vedi sotto
+    font-style: normal, italic, oblique, etc...
+    line-height: specifica la distanza tra ogni riga di testo;
+    font-stretch: condensa o espande un font (dipende dal font)
+    font-variant: specifica le varienti di font
+
+    Unità assolute:
+    Pixels (px): valore statico, quanti pixel si specificano tanti si ottengono. Tuttavia, varia molto da browser a browser, 
+    e non è una metrica accessibile dato che non può essere modificata dal browser.
+
+    Unità relative:
+    Relative, ovvero dipendenti da una grandezza specificata altrove.
+    %: unità relativa; dipende dalla grandezza del font dell'elemento padre.
+    em: valore dinamico; è un moltiplicatore del valore specificato dall'elemento parent; 
+        altrimenti è 16 px di default. E.g. il body ha come font-size 20px, un p con 2em avrà una grandezza pari a 40px
+    rem: em relativi al root html.
+
+    Viewport Units:
+    Le unità v- dipendono dalla grandezza della viewport (width o height); 
+    diversamente dalla dimensione espressa con %, non dipendono dall'elemento padre, ma dalle 
+    dimensioni della viewport.
+    vw: valori non negativi tra 0-100; ad esempio, 50vw significa metà della larghezza della viewport, e così via
+    vh: ad esempio, 20vh significa 1/5 dell'altezza della viewport, e così via
+
+    Fondere le unità
+    Per poter fondere insieme diverse unità possiamo utilizzare calc().
+    Ad esempio: height: calc(10vh + 100px);, width: calc(10vh + 2%), etc.
+-->

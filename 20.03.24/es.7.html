@@ -1,0 +1,144 @@
+<!--
+    Ripassiamo insieme:
+Flexbox (Flexible Box Layout) è un modulo CSS che ci consente di creare layout flessibili e 
+adattivi. In altre parole, ci permette di posizionare gli elementi HTML in modo fluido all'interno
+di un contenitore, adattandosi alla dimensione del contenitore e del dispositivo dell'utente.
+
+Il concetto chiave di Flexbox è la creazione di un "container" (contenitore) che contiene uno o
+più "flex item" (elementi flessibili). Il contenitore ha diverse proprietà CSS che ci permettono 
+di definire la direzione dei flex item, l'allineamento, lo spaziamento e altre opzioni di layout.
+I flex item, a loro volta, possono avere diverse proprietà CSS che ci permettono di definire la 
+loro grandezza, ordine, allineamento e altre proprietà.
+
+flex model
+Flexbox
+Ecco una lista delle proprietà principali:
+
+display: flex;: specifica il container dei flex-items.
+flex-grow: <number>;: specifica quanto un flex-item deve ingrandire.
+flex-shrink: <number>;: quanto un flex-item deve rimpicciolire.
+flex-basis: <dimensione>;: specifica la grandezza di base di un flex-item.
+flex: <flex-grow> <flex-shrink> <flex-basis>;: una singola proprietà per tutte e tre le 
+    precedenti.
+flex-direction: row/column;: Imposta la direzione principale dei flex item all'interno del 
+    contenitore. row (predefinita) imposta la direzione da sinistra a destra (orizzontale),
+     mentre column imposta la direzione dall'alto in basso (verticale).
+align-items: stretch/flex-start/flex-end/center/baseline;: Imposta l'allineamento dei flex item 
+    lungo la direzione trasversale del contenitore (opposta alla flex-direction). stretch 
+    (predefinito) allunga i flex item per adattarsi all'altezza del contenitore, flex-start 
+    allinea i flex item all'inizio del contenitore, flex-end li allinea alla fine, center li 
+    allinea al centro, baseline allinea i flex item basandosi sulla loro linea base (il bordo 
+    inferiore della prima riga di testo all'interno di ogni flex item).
+justify-content: flex-start/end/center/space-between/space-around;: Imposta l'allineamento dei 
+    flex item lungo la direzione principale del contenitore (flex-direction). flex-start 
+    (predefinito) allinea i flex item verso l'inizio del contenitore, flex-end li allinea verso 
+    la fine, center li allinea al centro, space-between li allinea con uno spazio equidistante 
+    tra di loro e space-around li allinea con uno spazio equidistante tra di loro e agli estremi
+     del contenitore.
+flex-wrap: nowrap/wrap/wrap-reverse;: Imposta il comportamento di wrapping dei flex item quando 
+    superano la larghezza del contenitore. nowrap (predefinito) fa sì che i flex item rimangano su 
+    una sola riga, mentre wrap li fa scorrere su più righe. wrap-reverse fa lo stesso di wrap, ma 
+    inverte l'ordine delle righe.
+
+grid-template-columns:repeat(3,100px) -> 3 colonne da 100px
+-->
+<style>
+    /*First we select the element(s) we want to flex.
+section has three article children, so: 
+- section is the flex container (display: flex;)
+-- articles are the flex items (flex: n = 1,2,3...; we can also tell the minim size we want the columns) 
+
+The flex items work as multiple columns, each of the same height, and they flex towards the direction
+we want: 
+- if flex-direction: column; they will occupy each one row as a full column
+- if flex-direction: row; they will try to occupy as much of the row as possible with multiple columns
+- flex-wrap tells if the columns must wrap based on some width rule
+
+*/
+
+section {
+    display: flex;
+    flex-direction: row;
+    /*flex-direction: row-reverse;*/
+    flex-wrap: wrap;
+  
+    /*flex-direction: column;*/
+  }
+  
+  html {
+    font-family: sans-serif;
+  }
+  
+  body {
+    margin: 0;
+  }
+  
+  header {
+    background: purple;
+    height: 100px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: white;
+    line-height: 100px;
+    margin: 0;
+  }
+  
+  article {
+    padding: 10px;
+    margin: 10px;
+    background: aqua;
+    flex: 1 300px; 
+    /*minimum 300px*/
+    /*each article takes only 1 part*/
+    /*automatically responsive*/
+  }
+  
+  /* article:nth-of-type(3) {
+    flex: 2 300px;
+  }
+    /*the 2/1 units mean that the element shall take the space after the dimensions are computed*/
+</style>
+
+<header>
+    <h1>Sample flexbox example</h1>
+</header>
+
+<section>
+    <article>
+    <h2>First article</h2>
+
+    <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack portland everyday carry vinyl typewriter. Tacos PBR&B pork belly, everyday carry ennui pickled sriracha normcore hashtag polaroid single-origin coffee cold-pressed. PBR&B tattooed trust fund twee, leggings salvia iPhone photo booth health goth gastropub hammock.</p>
+    </article>
+
+    <article>
+    <h2>Second article</h2>
+
+    <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack portland everyday carry vinyl typewriter. Tacos PBR&B pork belly, everyday carry ennui pickled sriracha normcore hashtag polaroid single-origin coffee cold-pressed. PBR&B tattooed trust fund twee, leggings salvia iPhone photo booth health goth gastropub hammock.</p>
+    </article>
+
+    <article>
+    <h2>Third article</h2>
+
+    <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack portland everyday carry vinyl typewriter. Tacos PBR&B pork belly, everyday carry ennui pickled sriracha normcore hashtag polaroid single-origin coffee cold-pressed. PBR&B tattooed trust fund twee, leggings salvia iPhone photo booth health goth gastropub hammock.</p>
+    </article>
+
+    <article>
+    <h2>Fourth article</h2>
+
+    <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack portland everyday carry vinyl typewriter. Tacos PBR&B pork belly, everyday carry ennui pickled sriracha normcore hashtag polaroid single-origin coffee cold-pressed. PBR&B tattooed trust fund twee, leggings salvia iPhone photo booth health goth gastropub hammock.</p>
+    </article>
+
+    <article>
+    <h2>Fifth article</h2>
+
+    <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack portland everyday carry vinyl typewriter. Tacos PBR&B pork belly, everyday carry ennui pickled sriracha normcore hashtag polaroid single-origin coffee cold-pressed. PBR&B tattooed trust fund twee, leggings salvia iPhone photo booth health goth gastropub hammock.</p>
+    </article>
+
+    <article>
+    <h2>Sixth article</h2>
+
+    <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack
+    </article>
+</section>
