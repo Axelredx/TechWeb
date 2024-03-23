@@ -1,0 +1,156 @@
+#background{
+    background-color: rgb(198, 60, 60);
+    width: 75vw;
+    height: 50vw;
+}
+
+#central-bar{
+    position: absolute;
+    background-color: rgb(34, 34, 190);
+    left: 25vw;
+    width: 25%;
+    height: 97%;
+}
+
+.lateral-bar{
+    align-items: center;
+    justify-content: center;
+}
+
+#y-bar, #y-bar-2, #y-red-bar-l, #y-red-bar-r{
+    position: absolute;
+    background-color: yellow;
+    bottom: 75px;
+    left: 45px;
+    width: 50px;
+    height: 200px;
+}
+
+#y-bar-2{
+    left: 200px;   
+}
+
+#rettangle, #rettangle1, #ret-top, #ret-mid{
+    position: absolute;
+    background-color: yellow;
+    width: 95px;
+    height: 15px;
+    left: 100px;
+    bottom: 100px;
+}
+
+#ret-mid{
+    bottom: 240px;
+}
+
+#ret-top{
+    bottom: 255px;
+    height: 20px;
+}
+
+#rettangle1{
+    height: 10px;
+    height: 20px;
+    bottom: 75px;
+}
+
+#ret-bot-red-l, #ret-bot-red-r, #ret-top-red-l, #ret-top-red-r{
+    position: absolute;
+    background-color: rgb(198, 60, 60);
+    transform: rotate(15deg);
+    border-radius: 8px;
+    width: 60px;
+    height: 10px;
+    left: 95px;
+    bottom: 77px;
+}
+
+#ret-top-red-l, #ret-top-red-r{
+    bottom: 255px;
+}
+
+#ret-top-red-r{
+    left: 140px;
+    rotate: 150deg;
+}
+
+#ret-bot-red-l-1, #ret-bot-red-r-1, #ret-top-red-r-1, #ret-top-red-l-1{
+    position: absolute;
+    border-radius: 8px;
+    background-color: rgb(198, 60, 60);
+    transform: rotate(15deg);
+    width: 60px;
+    height: 15px;
+    left: 95px;
+    bottom: 65px;
+}
+
+#ret-bot-red-r{
+    left: 140px;
+    rotate: 150deg;
+}
+
+#ret-bot-red-r-1{
+    left: 140px;
+    rotate: 150deg;
+}
+
+#ret-top-red-l-1, #ret-top-red-r-1{
+    bottom: 241px;
+}
+
+#ret-top-red-l-1{
+    left: 140px;
+    rotate: 150deg;
+}
+
+#circle, #red-circ, #red-circ-top{
+    position: absolute;
+    background-color: yellow;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    left: 100px;
+    bottom: 280px;
+}
+
+#red-circ{
+    background-color: rgb(198, 60, 60);
+    bottom: 297px;
+}
+
+#red-circ-top{
+    left: 110px;
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    bottom: 310px;
+}
+
+#social-credit, #xi-jin-poo{
+    position: absolute;
+    bottom: 120px;
+    left: 100px;
+    width: 100px;
+    height: 110px;
+}
+
+#xi-jin-poo{
+    border-radius: 180px;
+    width: 70px;
+    height: 70px;
+    top: 140px;
+    left: 120px;
+}
+
+#y-red-bar-l, #y-red-bar-r{
+    background-color:rgb(198, 60, 60);
+    bottom: 400px;
+    left: 110px;
+    height: 100px;
+    width: 28px;
+}
+
+#y-red-bar-r{
+    left: 167px;
+}
