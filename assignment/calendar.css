@@ -1,0 +1,106 @@
+body{
+    position: absolute;
+    width: 70vw;
+    left: 15%;
+}
+
+#title{
+    position: absolute;
+    border: solid black;
+    text-align: center;
+    width: 20vw;
+    height: 12vh;
+    color: white;
+    background-color: grey;
+    left: calc(20vw + 6px);
+}
+
+.body{
+    position: absolute;
+    border: solid black;
+    width: 65vw;
+    height: 70vh;
+    top: 13vh;
+}
+
+#text-portion{
+    position: absolute;
+    border: solid black;
+    height: 70vh;
+    width: 30vw;
+}
+
+#number-portion{
+    position: absolute;
+    border: solid black;
+    height: 70vh;
+    width: calc(35vw - 3px);
+    right: 0px;
+}
+
+#mini-title1, #mini-title2{
+    border: solid black;
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    background-color: grey;
+    color: yellow;
+}
+
+#h2txt{
+    position: absolute;
+    left: 30px;
+}
+
+#mini-title2{
+    text-align: center;
+    color: aqua;
+}
+
+#text, #number{
+    position: absolute;
+    border: solid black;
+    top: 62px;
+    width: 100%;
+    height: 85%;
+}
+
+table{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+#th-table{
+    color: blue;
+    border: solid black;
+}
+
+#writing{
+    position:absolute;
+    font-size: 14px;
+    width: 70%;
+    height: 60%;
+    left: 60px;
+    top: 50px;
+}
+
+#wkend{
+    color: red;
+}
+
+#td-hov:hover, #td-hov:active{
+    border-radius: 200px;
+    background-color: grey;
+    color: white;
+}
+
+#text{
+    background-image: url("https://scubidu.eu/wp-content/uploads/2021/06/pergamena.png");
+    background-size: 100% 100%;
+}
+
+#td-hov:active{
+    background-color: aquamarine;
+    color: black;
+}
