@@ -5,7 +5,7 @@
 }
 
 #central-bar{
-    position: absolute;
+    position: fixed;
     background-color: rgba(0, 101, 179, 0.744);
     left: 25vw;
     width: 25%;
@@ -13,8 +13,9 @@
 }
 
 .lateral-bar{
-    align-items: center;
-    justify-content: center;
+    position: fixed;
+    height: 100%;
+    width: 32%;
 }
 
 #y-bar, #y-bar-2, #y-red-bar-l, #y-red-bar-r{
@@ -136,11 +137,12 @@
 }
 
 #xi-jin-poo{
+    position: fixed;
     border-radius: 180px;
     width: 70px;
     height: 70px;
     top: 140px;
-    left: 120px;
+    left: 130px;
 }
 
 #y-red-bar-l, #y-red-bar-r{
