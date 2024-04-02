@@ -1,45 +1,74 @@
-document.getElementById('studyForm').addEventListener('submit', function(event) {
-    // Previene il comportamento di default dell'evento, che sarebbe il submit del form
-    event.preventDefault();
-  
-    // Ottiene il tempo di studio inserito dall'utente e lo converte in un numero intero
-    const studyTime = parseInt(document.getElementById('studyTime').value, 10);
-    // Converte i minuti in secondi per l'animazione
-    const animationDuration = studyTime * 60; 
-  
-    // Imposta l'animazione con durata dinamica per gli pseudo-elementi ::before e ::after
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = `
-      .blob::before, .blob::after {
-        animation: rotate ${animationDuration}s linear forwards;
-      }
-    `;
-    // Aggiunge il foglio di stile creato all'elemento head del documento
-    document.head.appendChild(styleSheet);
-  
-    // Calcola il tempo di fine aggiungendo la durata del timer al tempo corrente
-    const endTime = Date.now() + studyTime * 60000; 
-  
-    // Imposta un intervallo che si ripete ogni secondo
-    const interval = setInterval(function() {
-      const now = Date.now();
-      // Calcola la differenza tra il tempo di fine e il tempo corrente
-      const difference = endTime - now;
-      
-      // Se la differenza è minore o uguale a 0, ferma l'intervallo
-      if (difference <= 0) {
-        clearInterval(interval);
-        // Pulisce il testo dell'elemento con id 'timerDisplay'
-        document.getElementById('timerDisplay').textContent = ""; 
-        return;
-      }
-  
-      // Calcola i minuti e i secondi rimanenti
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      
-      // Visualizza il tempo rimanente nell'elemento con id 'timerDisplay'
-     //padstart aggiunge uno zero prima della stringa se non raggiunge almeno una lunghezza di 2
-      document.getElementById('timerDisplay').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    }, 1000);
-  });
+let stopped = false;
+let nRun = 0;
+let interval;
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('studyForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let numberTom = parseInt(document.getElementById('numberTom').value, 10);
+        let minTom = parseInt(document.getElementById('minTom').value, 10);
+        let minPause = parseInt(document.getElementById('minPause').value, 10);
+        //total number between pauses and tomato
+        let totTom = numberTom + (numberTom-1);
+        startTomatoSession(totTom, minTom, minPause);
+    });
+});
+
+function startTomatoSession(numberTom, minTom, minPause) {
+    stopped = false; // Reset stopped flag
+    nRun = 0; // Reset tomato counter
+    startTomato(minTom, minPause, numberTom, 'tomato');
+}
+
+function startTomato(minTom, minPause, remaining, type) {
+    nRun++;
+    showSpinner();
+    console.log(`${type} started. Remaining: ${remaining}`);
+    startTimer(minTom, function() {
+        hideSpinner();
+        console.log(`${type} finished. Remaining: ${remaining}`);
+        remaining--;
+        if (remaining > 0) {
+            setTimeout(() => {
+                if (type === 'tomato') {
+                    startTomato(minPause, minTom, remaining, 'pause');
+                } else {
+                    startTomato(minTom, minPause, remaining, 'tomato');
+                }
+            }, (type === 'tomato' ? minPause : minTom) * 60000);
+        }
+    });
+}
+
+function startTimer(minutes, callback) {
+    const endTime = Date.now() + minutes * 60000;
+    interval = setInterval(function() {
+        const now = Date.now();
+        const difference = endTime - now;
+        
+        if (difference <= 0 || stopped) {
+            clearInterval(interval);
+            document.getElementById('timerDisplay').textContent = "00:00";
+            if (callback) callback();
+            return;
+        }
+
+        const remainingMinutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        document.getElementById('timerDisplay').textContent = `${String(remainingMinutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }, 1000); 
+}
+
+function stopTimer() {
+    stopped = true;
+}
+
+function showSpinner() {
+    const spinner = document.getElementById('spinner-s');
+    spinner.classList.remove('d-none');
+}
+
+function hideSpinner() {
+    const spinner = document.getElementById('spinner-s');
+    spinner.classList.add('d-none');
+}

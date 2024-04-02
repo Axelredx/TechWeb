@@ -8,27 +8,23 @@ body {
 }
 
 .pomodoro{
-    border: solid black;
     display: flex;
     flex-direction: column;
     justify-content: space-around   ;
     align-items: center;
     width: 450px;
     height: 450px;
-    background-color: blue;
 }
 
 .music-player{
-    border: solid black;
     width: 800px;
     height: 100px;
-    background-color: red;
+    border: solid black;
 }
 
 #user{
     width: 200px;
     height: 40px;
-    background-color: green;
 }
 
 #visual{
@@ -40,8 +36,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: green;
-
 }
 
 form{
@@ -53,10 +47,25 @@ form{
 
 #clock {
     font-weight: bold;
-    font-size: 2em;
+    font-size: 4em;
     color: whitesmoke;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px;
+    text-shadow: 
+        -2px -2px 0 grey,  
+        2px -2px 0 grey,
+        -2px 2px 0 grey,
+        2px 2px 0 grey;
+}
+
+#in-spin{
+    position: fixed;
+}
+
+#stop-t{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

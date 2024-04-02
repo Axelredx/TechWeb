@@ -16,26 +16,28 @@
         </div>
         <div class="form-floating">
             <input class="form-control" placeholder="Leave a comment here" id="minTom" type="number" min="1" required></textarea>
-            <label for="min">Minutes of tomatoes?</label>
+            <label for="minTom">Minutes of tomatoes?</label>
         </div> 
         <div class="form-floating">
             <input class="form-control" placeholder="Leave a comment here" id="minPause" type="number" min="1" required></textarea>
-            <label for="min">Minutes of pauses?</label>
+            <label for="minPause">Minutes of pauses?</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Start new Pomodoro!</button>
     </form>
     <div class="pomodoro">
         <div id="visual">
             <div id="spinner">
-                <div class="spinner-border text-warning" style="width: 10rem; height: 10rem;" role="status">
+                <div id="spinner-s" class="spinner-border text-warning d-none" style="width: 15rem; height: 15rem;" role="status">
                     <span class="visually-hidden">Studing...</span>
                 </div>
+            </div>
+            <div id="in-spin">
                 <div id="clock" class="blob">
                     <div class="timer" id="timerDisplay">00:00</div>
                 </div>
-            </div>
-            <div>
-                <button onclick="stopTimer()" class="btn btn-danger"><i class="bi bi-stopwatch"></i>Stop studing</button>
+                <div id="stop-t">
+                    <button onclick="stopTimer()" class="btn btn-danger"><i class="bi bi-stopwatch"></i>Stop studing</button>
+                </div>                
             </div>
         </div>
     </div>
