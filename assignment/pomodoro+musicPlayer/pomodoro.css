@@ -1,0 +1,62 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; 
+    align-items: center; 
+    height: 97vh;
+    background-color: grey;
+}
+
+.pomodoro{
+    border: solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around   ;
+    align-items: center;
+    width: 450px;
+    height: 450px;
+    background-color: blue;
+}
+
+.music-player{
+    border: solid black;
+    width: 800px;
+    height: 100px;
+    background-color: red;
+}
+
+#user{
+    width: 200px;
+    height: 40px;
+    background-color: green;
+}
+
+#visual{
+    background-image: url(https://site212248.tw.cs.unibo.it/img/tomato.png);
+    background-size: 100% 100%;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+
+}
+
+form{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: 5px;
+}
+
+#clock {
+    font-weight: bold;
+    font-size: 2em;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
