@@ -36,6 +36,8 @@ function startTomato(minTom, minPause, remaining, type) {
                     startTomato(minTom, minPause, remaining, 'tomato');
                 }
             }, (type === 'tomato' ? minPause : minTom) * 60000);
+        }else{
+            return;
         }
     });
 }
