@@ -1,0 +1,109 @@
+#API Restaurant
+
+swagger: "2.0"
+info: 
+  version: "1.0"
+  title: "Restaurant"
+  description: "Menu of a restaurant"
+  
+paths:
+  /menus/: #/menus/?type=fish&minPrice=100
+    get:
+      operationId: getMenus
+      parameters:
+        - name: type
+          in: query
+          required: false
+          type: string #single string wich values is only one
+          enum:
+            - fish
+            - meat
+        - name: minPrice
+          in: query
+          required: false
+          type: integer
+      responses: 
+        "200":
+          description: "Success"
+          schema: 
+            type: array
+            items:
+              $ref: "#/definitions/Menu" #it refers on 'definitions' below
+        "400":
+          description: "Error"
+          
+  /menus/{menuID}: 
+    get:
+      operationId: get1Menu
+      parameters:
+        - name: menuID
+          in: path
+          required: true
+          type: string 
+      responses: 
+        "200":
+          description: "Success"
+          schema: 
+              $ref: "#/definitions/Menu" #gives only 1 menu!
+        "400":
+          description: "Error"
+          #schema: 
+          #    $ref: "#/definitions/Error"
+  
+  /menus/{menuID}/piatti:
+    post:
+      operationId: addPlate
+      parameters: 
+      #1st part to find menu
+        - name: menuID
+          in: path
+          required: true
+          type: string 
+      #nd part to add plate
+        - name: newPlate
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Plate"
+      responses: 
+        "200":
+          description: "Success"
+          schema: 
+              $ref: "#/definitions/Menu" #gives back menu updated
+        "400":
+          description: "Error"
+    
+definitions:
+  Menu: #not a specific menu but it describe its type
+    type: object
+    required:
+      - id
+      - price #field required 
+    properties:
+      id:
+        type: string
+      price:
+        type: integer
+      description:
+        type: string
+        example: "A good Fish menu"
+      type:
+        type: string
+        enum:
+          - fish
+          - meat
+      plate:
+        type: array
+        items:
+          $ref: "#/definitions/Plate"
+          
+  Plate:
+    type: object
+    required:
+      - id
+      - price
+    properties:
+      id:
+        type: string
+      price:
+        type: integer
