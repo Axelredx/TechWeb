@@ -9,6 +9,7 @@ const app = createApp({
             stopped: true,
             timer: '00:00',
             totalCycle: 0,
+            totCopy: 0,
             interval: null
         };
     },
@@ -16,6 +17,7 @@ const app = createApp({
         Tomato() {
             if (!this.stopped) return;
             this.totalCycle = (this.numberTom * 2) - 1;
+            this.totCopy = this.totalCycle;
             this.startTomato();
         },
         startTomato() {
@@ -23,6 +25,8 @@ const app = createApp({
             this.runCycle(0);
         },
         runCycle(cycle) {
+            console.log('cycle remaining: ' + this.totCopy);
+            // loop condition like a 'i < max'
             if (cycle > this.totalCycle) {
                 this.stopped = true;
                 return;
@@ -30,6 +34,7 @@ const app = createApp({
             let duration = cycle % 2 === 0 ? this.minTom : this.minPause;
             console.log(cycle % 2 === 0 ? 'tomato session' : 'pause');
             this.startTimer(duration, () => {
+                this.totCopy--;
                 this.runCycle(cycle + 1);
             });
         },
@@ -54,25 +59,44 @@ const app = createApp({
             }, 1000);
         },
         stopTimer() {
-            console.log('Tomato aborted!');
+            if(this.totalCycle <= 0){
+                console.log('Cant stop cycle!');
+                return;
+            }
+            //console.log('Tomato aborted!');
             this.stopped = true;
             this.timer = '00:00';
             this.totalCycle = 0;
+            this.totCopy = 0;
             clearInterval(this.interval);
         },
         skipCycle() {
+            if(this.totalCycle <= 0){
+                console.log('Cant skip cycle!');
+                return;
+            }
             console.log('Cycle skipped!');
+            let cycle = this.totCopy - 2;
             this.stopTimer();
-            if (this.totalCycle > 0) {
-                this.totalCycle--;
-                this.runCycle(this.totalCycle);
+            if (cycle > 0) {
+                this.totCopy = cycle;
+                this.totalCycle = cycle;
+                this.startTomato();
+            }else{
+                console.log('Tomato aborted because all cycle remaining skipped!');
             }
         },
         redoCycle() {
+            if(this.totalCycle <= 0){
+                console.log('Cant redo cycle!');
+                return;
+            }
             console.log('Cycle redone!');
+            let cycle = this.totCopy;
             this.stopTimer();
-            this.totalCycle++;
-            this.runCycle(this.totalCycle);
+            this.totCopy = cycle + 2;
+            this.totalCycle = cycle + 2;
+            this.startTomato();
         }
     }
 });
