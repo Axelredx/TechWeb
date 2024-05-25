@@ -2,7 +2,7 @@ const { createApp } = Vue;
 const app = createApp({
     data() {
         return {
-            startString: 'Start new Pomodoro!',
+            startString: 'Start!',
             numberTom: 5,
             minTom: 25,
             minPause: 5,

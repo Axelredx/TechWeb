@@ -1,0 +1,74 @@
+body{
+    background-color: darkgrey;
+}
+
+#app{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.pomodoro{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 500px;
+    border: solid black;
+    border-radius:10px;
+    align-items: center;
+    background-color: white;
+}
+
+#studyForm{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 5px;
+}
+
+#visual{
+    background-image: url(https://site212248.tw.cs.unibo.it/img/tomato.png);
+    background-size: 100% 100%;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#clock {
+    font-weight: bold;
+    font-size: 4em;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    text-shadow: 
+        -1px -1px 0 black,  
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+    margin-top: 70px;
+}
+
+#buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#stop-t{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 70px;
+}
+
+
+button, .form-floating{
+    margin: 1px;
+}
