@@ -1,0 +1,96 @@
+a) CSS
+    Come si ottiene un effetto di trasparenza in CSS? Si faccia anche un esempio.
+    Attraverso la proprietà opacity usando da voliri da 0 (trasparente) a 1 (total visible)
+
+    <style>
+        .obj{
+            opacity: 0.5; //half visible
+        }
+    </style>
+    <body>
+        <div class="obj"></div>
+    </body>
+
+b) Codifica caratteri
+    Quanti byte sono richiesti in UTF-8 per rappresentare le seguenti parole? NB:
+    arabo e giapponese presentano 2 caratteri. (parola: pane)
+    • Nederlandese: brood
+    • Giapponese: パン
+    • Spagnolo: pan
+    • Cinese semplificato: 面包
+    • Russo: хлеб
+    • Arabo: خبز
+
+    N) ogni ASCII = 1 byte -> 5 byte;
+    G) 3 byte ciascuno -> 6 byte;
+    S) 3 byte;
+    C) come giapponese -> 6 byte;
+    R) 2 byte ciascuno-> 8 byte;
+    A) come russo -> 4 byte.
+
+c) URI
+    Fornire una breve spiegazione su cosa sia un URI e da quali componenti è
+    composto; utilizza il seguente esempio per identificare e spiegare nel dettaglio
+    ognuna delle componenti.
+    https://www.governmentissues.com:8080/files/documents/bills?query=ministry#first
+
+    URI:A URI (Uniform Resource Identifier) is a string that refers to a resource.
+        The most common are URLs, which identify the resource by giving its location on the Web. 
+        URNs, by contrast, refer to a resource by a name, in a given namespace, such as the ISBN 
+        of a book.
+    
+    è nella forma:
+    [protocol]://[authority]/[path]?[query]
+
+    https://www.governmentissues.com:8080/files/documents/bills?query=ministry#first
+    \____/   \_____________________/ \__/ \___________________/ \___________/ \____/
+      |                |              |         |                    |           |
+    Schema            Host           Port      Path                Query     Fragment
+
+
+    1. Schema (o Protocollo)
+    Componente: https
+    Descrizione: Specifica il protocollo utilizzato per accedere alla risorsa. 
+    In questo caso, HTTPS (Hypertext Transfer Protocol Secure).
+    
+    2. Host (o Nome di dominio)
+    Componente: www.governmentissues.com
+    Descrizione: Indica il dominio dove risiede la risorsa. Questo è il nome del server 
+    che ospita la risorsa.
+    
+    3. Port (Porta)
+    Componente: :8080
+    Descrizione: Indica la porta del server a cui connettersi. Se omessa, si assume la 
+    porta predefinita per il protocollo specificato (443 per HTTPS, 80 per HTTP). In questo 
+    caso, è specificata la porta 8080.
+    
+    4. Path (Percorso)
+    Componente: /files/documents/bills
+    Descrizione: Indica il percorso alla risorsa sul server. Rappresenta la struttura di 
+    directory e sottodirectory sul server.
+    
+    5. Query
+    Componente: ?query=ministry
+    Descrizione: Inizia con un punto interrogativo (?) e contiene una stringa di query che 
+    fornisce parametri per la risorsa. In questo caso, query=ministry è un parametro di ricerca.
+    
+    6. Fragment (Frammento)
+    Componente: #first
+    Descrizione: Inizia con un simbolo di cancelletto (#) e fa riferimento a una parte specifica 
+    della risorsa. È usato tipicamente per indicare una sezione di un documento HTML.
+
+d) API
+    Descrivere, nel contesto di una REST API, la gerarchia delle collezioni. Fornire
+    almeno un esempio con tre livelli utilizzando filtri e search.
+
+    Nelle REST API, le risorse sono organizzate gerarchicamente in collezioni. Una collezione
+    è un insieme di risorse che possono essere recuperate, create, aggiornate o eliminate. La 
+    gerarchia delle collezioni permette di strutturare le risorse in modo logico e accessibile, 
+    seguendo un modello ad albero.
+
+    es con 'librerie, libri, recensioni'
+    lvl1: GET /libraries/{library_id}
+    lvl2: GET /libraries/{library_id}/books/{book_id}
+    lvl3: GET /libraries/{library_id}/books/{book_id}/reviews
+
+    GET /libraries/{library_id}/books?search=harry+potter
