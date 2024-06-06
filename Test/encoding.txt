@@ -1,0 +1,7 @@
+Per determinare quanti byte sono richiesti in UTF-8 per rappresentare le parole 
+fornite in diverse lingue, dobbiamo considerare il numero di caratteri e il tipo 
+di caratteri (ASCII, non-ASCII, ecc.). In UTF-8, i caratteri sono codificati come segue:
+    * caratteri ASCII (U+0000 to U+007F) usano 1 byte.
+    * caratteri Latin-1 Supplement e altri europei (U+0080 to U+07FF) usano 2 byte.
+    * caratteri in lingue asiatiche e altre (ideogrammi) (U+0800 to U+FFFF) usano 3 byte.
+    * caratteri rarissimi (U+10000 to U+10FFFF) usano 4 byte.
