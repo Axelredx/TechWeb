@@ -144,6 +144,7 @@
     isTomato.value = false;
     isPause.value = false;
   }
+
 </script>
 
 <template>
