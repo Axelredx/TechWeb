@@ -152,15 +152,15 @@
       <form id="studyForm" @submit.prevent="Tomato">
           <div class="form-floating">
               <input class="form-control" placeholder="Number of tomatoes" v-model.number="numberTom" type="number" min="1" required>
-              <label>Number of Cycles</label>
+              <label>N° Cycles</label>
           </div>
           <div class="form-floating">
               <input class="form-control" placeholder="Minutes of tomatoes" v-model.number="minTom" type="number" min="1" required>
-              <label>Min. of Tomatoes</label>
+              <label>Min. Tomato</label>
           </div> 
           <div class="form-floating">
               <input class="form-control" placeholder="Minutes of pauses" v-model.number="minPause" type="number" min="1" required>
-              <label >Min. of Pauses</label>
+              <label >Min. Pause</label>
           </div>
           <button type="submit" class="btn btn-primary" id="form-btn">
               {{ startString }} <img src="@/assets/stopwatch.svg" alt="Stop"/>
@@ -195,12 +195,13 @@
   .pomodoro{
       display: flex;
       flex-direction: column;
-      width: 500px;
-      height: 500px;
+      width: 40vw;
+      height: 75vh;
       border: solid black;
       border-radius:10px;
       align-items: center;
       background-color: white;
+      margin: 2px;
   }
 
   #studyForm{
@@ -212,8 +213,8 @@
   }
 
   #visual{
-      width: 400px;
-      height: 400px;
+      width: 40vw;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       /*justify-content: center;*/
@@ -243,7 +244,7 @@
       height: 30vh;
       width: 30vw;
       border-radius: 200px;
-      margin-bottom: 50px;
+      margin-bottom: 15vh;
       transform-origin: center;
       animation: rotate-background 10s linear infinite;
       /*border: solid black;*/
@@ -289,6 +290,31 @@
     }
     to {
       transform: rotate(-360deg);
+    }
+  }
+
+  @media (max-width: 900px) {
+    #buttons, #studyForm{
+      flex-direction: column;
+    }
+
+    #clock, #clock_tomato, #clock_pause{
+      margin-bottom: 2vh;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .pomodoro{
+      width: 90vw;
+      height: 65vh;
+    }
+
+    #buttons, #studyForm{
+      flex-direction: row;
+    }
+
+    #visual{
+      width: 88vw;
     }
   }
 </style>

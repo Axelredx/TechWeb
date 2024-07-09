@@ -69,12 +69,13 @@
     #container {
         display: flex;
         flex-direction: column;
-        width: 400px;
-        height: 250px;
+        width: 30vw;
+        height: 41vh;
         border: solid black;
         border-radius: 10px;
         align-items: center;
         background-color: white;
+        margin: 2px;
     }
 
     #studyForm {
@@ -86,5 +87,30 @@
 
     #output, #info-text {
         margin: 5px;
+    }
+
+    @media (max-width: 950px) {
+        #studyForm{
+            flex-direction: column;
+        }
+
+        #container {
+            height: 50vh;
+        }
+    }
+
+    @media (max-width: 500px) {
+        #container{
+            width: 90vw;
+            height: 35vh;
+        }
+
+        #studyForm{
+            flex-direction: row;
+        }
+
+        #output, #info-text {
+            margin: 2px;
+        }
     }
 </style>
