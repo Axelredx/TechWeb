@@ -1,0 +1,42 @@
+a) Differenze tra HTTP/1.1 e HTTP/2
+    Descrivere almeno due differenze importanti tra HTTP/1.1 e HTTP/2:
+
+    https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP
+
+b) Sicurezza Web
+    Descrivere cosa sono e come funzionano le Injection nel campo della
+    Sicurezza Web e fornire un esempio pratico del loro utilizzo.
+
+    Le injection vengono usate per eseguire codice malevolo, nel caso delle XSS (cross site injection)
+    di script, e/o per l'ottenimento di dati, permesso o negazione del servizio per quanto riguarda quelle
+    SQL (dirette al server stesso).
+
+    XSS: https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting
+    SQL in.: https://developer.mozilla.org/en-US/docs/Glossary/SQL_Injection
+
+c) Mongoose Schema
+    Scrivere uno (o più) schema/schemata Mongoose che possa/no raccogliere
+    tutte le informazioni della seguente descrizione: “Il 1° settembre, presso la
+    Sala Conferenze della Biblioteca Centrale, si terrà una presentazione del libro
+    ‘Il futuro della tecnologia’ di Anna Rossi. L’evento, che inizierà alle 18:00 e
+    durerà circa 2 ore, è gratuito e aperto a tutti fino ad esaurimento posti. È
+    richiesta la prenotazione online.” NB: nel testo sono contenute circa 10
+    possibili informazioni strutturabili.
+
+    const mongoose = require('mongoose');
+    const Schema = mongoose.Schema;
+
+    const eventSchema = new Schema({
+        date: Date,
+        location: String,
+        type_of_event: String,
+        name_book: String,
+        author: String,
+        starting_time: Time,
+        duration: Hours,
+        fee: Integer,
+        seats: Integer,
+        need_to_book: Boolean
+    });
+
+    module.exports = mongoose.model('Event', eventSchema);
