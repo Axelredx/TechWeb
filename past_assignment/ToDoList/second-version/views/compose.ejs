@@ -1,0 +1,164 @@
+<%- include('partials/header'); -%>
+
+<style>
+  #markdown-preview img {
+    max-width: 30%; /* Le immagini nel preview avranno un massimo del 30% della larghezza del contenitore */
+  }
+</style>
+<header>
+  <h1 id="compose-h1">Compose</h1>
+</header>
+<p>
+  Markdown è un linguaggio di markup leggero che consente di formattare il testo in modo semplice e veloce. Puoi creare elenchi, titoli, testo in grassetto o in corsivo, e molto altro. Per aggiungere un'immagine utilizzando un URL, utilizza la sintassi `![alt text](URL)`, dove "alt text" è il testo alternativo visualizzato se l'immagine non viene caricata e "URL" è l'indirizzo dell'immagine. Ad esempio, per inserire un'immagine da un sito web, potresti scrivere `![Logo](https://example.com/logo.png)`.
+</p>
+<ul>
+  <li><strong>Testo in Grassetto</strong>: usa due asterischi su entrambi i lati del testo, come <code>**grassetto**</code>, per ottenere un risultato in grassetto.</li>
+  <li><strong>Testo in Corsivo</strong>: un asterisco su entrambi i lati del testo, come <code>*corsivo*</code>, rende il testo in corsivo.</li>
+  <li><strong>Elenchi Non Ordinati</strong>: usa il trattino, l'asterisco o il segno più all'inizio della riga, come <code>-</code>, <code>*</code>, o <code>+</code>, per creare un elenco a punti.</li>
+  <li><strong>Elenchi Ordinati</strong>: numeri seguiti da un punto, come <code>1.</code>, <code>2.</code>, creano elenchi numerati.</li>
+  <li><strong>Immagini</strong>: inserisci immagini utilizzando la sintassi <code>![alt text](URL)</code>, dove "alt text" è il testo alternativo e "URL" è l'indirizzo dell'immagine.</li>
+</ul>
+<div class="row">
+<div class="col-lg-8 col-md-12 col-sm-12">
+<form method="post" action="/compose" id="form-content">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="form-floating">
+        <textarea
+          name="title"
+          class="form-control"
+          placeholder="Enter your title"
+          id="floatingTextarea1"
+          style="height: 50px"
+          required
+          aria-label="Title"
+        ></textarea>
+        <label for="floatingTextarea1">Title</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="form-floating">
+        <textarea
+          name="post"
+          class="form-control"
+          placeholder="Write your post..."
+          id="text-input"
+          style="height: 200px"
+          required
+          aria-label="Content"
+          oninput="updateMarkdownPreview()"
+        ></textarea>
+        <label for="text-input">Post (Markdown)</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-lg-4">
+      <div class="form-floating">
+        <input
+          name="place"
+          type="text"
+          class="form-control"
+          placeholder="Place"
+          value="Bologna"
+          aria-label="Place"
+        />
+        <label for="floatingTextArea4">Place</label>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="form-floating tags-input-wrapper" id="tags-container">
+        <input
+          type="text"
+          class="form-control"
+          id="tag-input"
+          placeholder="Add tags..."
+          aria-label="Tags"
+          onkeydown="handleTagInput(event)"
+        />
+        <label for="tag-input">Tags (press Enter to add)</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-lg-6">
+      <button type="submit" class="btn btn-primary">Publish</button>
+    </div>
+  </div>
+</form>
+</div>
+
+
+<div class="col-lg-4 col-md-12 col-sm-12"  style="max-width: 100%;">
+  <h3>Preview</h3>
+<div id="markdown-preview" class="mt-3">
+</div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.0.6/markdown-it.min.js"></script>
+
+<script>
+  const markdownInstance = new markdownit();
+
+  function updateMarkdownPreview() {
+    const markdownText = document.getElementById("text-input").value;
+    const htmlContent = markdownInstance.render(markdownText);
+    document.getElementById("markdown-preview").innerHTML = htmlContent;
+  }
+
+  function handleTagInput(event) {
+    if (event.key === "Enter") { // Add tag on Enter key press
+      event.preventDefault(); // Prevent form submission
+      const tagText = document.getElementById("tag-input").value.trim();
+      if (tagText) { // If text is valid
+        addTag(tagText); // Add tag to the list
+        document.getElementById("tag-input").value = ""; // Clear input after adding
+      }
+    }
+  }
+
+  function addTag(tag) {
+    const tagsWrapper = document.getElementById("tags-container"); // Tag container
+    const tagElement = document.createElement("span"); // Create new tag
+
+    tagElement.className = "tag"; // Assign tag class
+    tagElement.innerHTML = `${tag} <button type="button" class="btn-close" onclick="removeTag('${tag}')">&times;</button>`; // Add remove button
+
+    tagsWrapper.appendChild(tagElement); // Add tag to the wrapper
+  }
+
+  function removeTag(tag) {
+    const tagsWrapper = document.getElementById("tags-container");
+    const tags = Array.from(tagsWrapper.getElementsByClassName("tag")); // Get all tag elements
+
+    tags.forEach((t) => {
+      if (t.innerText.includes(tag)) {
+        t.remove(); // Remove the specific tag
+      }
+    });
+  }
+
+  function getTagsArray() {
+    const tagsWrapper = document.getElementById("tags-container");
+    const tags = Array.from(tagsWrapper.getElementsByClassName("tag"));
+    return tags.map(tagElement => tagElement.innerText.replace(" ×", "")); // Remove the close button text
+  }
+
+  document.querySelector("form#form-content").addEventListener("submit", function(event) {
+    const tags = getTagsArray(); // Get all tags before form submission
+    const hiddenInput = document.createElement("input"); // Create a hidden field
+    hiddenInput.type = "hidden";
+    hiddenInput.name = "tags";
+    hiddenInput.value = JSON.stringify(tags); // Store the tags as a JSON array
+    this.appendChild(hiddenInput); // Append to the form
+  });
+
+  updateMarkdownPreview(); // Initialize the Markdown preview
+</script>
+
+<%- include('partials/footer'); -%>

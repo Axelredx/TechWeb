@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pomodoro!</title>
+    <link rel="icon" href="https://site212248.tw.cs.unibo.it/img/tomato.png" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3"></script>
+    <link href="./pomodoro.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: darkgrey;
+        }
+
+        #app {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .pomodoro {
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            height: 500px;
+            border: solid black;
+            border-radius: 10px;
+            align-items: center;
+            background-color: white;
+        }
+
+        #studyForm {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            margin: 5px;
+        }
+
+        #visual {
+            background-image: url(https://site212248.tw.cs.unibo.it/img/tomato.png);
+            background-size: 100% 100%;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #clock {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .circular-progress {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .background {
+            stroke: #eee;
+        }
+
+        .progress {
+            stroke: #76c7c0;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        .timer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 4em;
+            color: whitesmoke;
+            text-shadow:
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black;
+        }
+
+        #buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #stop-t {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 70px;
+        }
+
+        button, .form-floating {
+            margin: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="pomodoro">
+            <form id="studyForm" @submit.prevent="Tomato">
+                <div class="form-floating">
+                    <input class="form-control" placeholder="Number of tomatoes" v-model.number="numberTom" type="number" min="1" required>
+                    <label>Number of Cycles</label>
+                </div>
+                <div class="form-floating">
+                    <input class="form-control" placeholder="Minutes of tomatoes" v-model.number="minTom" type="number" min="1" required>
+                    <label>Min. of Tomatoes</label>
+                </div> 
+                <div class="form-floating">
+                    <input class="form-control" placeholder="Minutes of pauses" v-model.number="minPause" type="number" min="1" required>
+                    <label >Min. of Pauses</label>
+                </div>
+                <button type="submit" class="btn btn-primary">{{ startString }}</button>
+            </form>
+            <div id="visual">
+                <div id="clock">
+                    <div class="circular-progress">
+                        <svg>
+                            <circle class="background" cx="50%" cy="50%" r="90"></circle>
+                            <circle class="progress" cx="50%" cy="50%" r="90" :style="progressStyle"></circle>
+                        </svg>
+                    </div>
+                    <div class="timer" id="timerDisplay">{{ timer }}</div>
+                </div>
+                <div id="buttons">
+                    <div id="stop-t">
+                        <button @click="stopTimer" type="button" class="btn btn-danger"><i class="bi bi-stopwatch"></i> Stop Studying!</button>
+                        <button @click="skipCycle" type="button" class="btn btn-warning"><i class="fa-solid fa-forward"></i> Skip a Cycle!</button>
+                        <button @click="redoCycle" type="button" class="btn btn-light"><i class="fa-solid fa-rotate-right"></i> Redo a Cycle!</button>
+                    </div> 
+                </div>       
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        const app = createApp({
+            data() {
+                return {
+                    startString: 'Start!',
+                    numberTom: 5,
+                    minTom: 25,
+                    minPause: 5,
+                    stopped: true,
+                    timer: '00:00',
+                    totalCycle: 0,
+                    totCopy: 0,
+                    interval: null,
+                    circumference: 2 * Math.PI * 90, // 2 * π * radius
+                };
+            },
+            computed: {
+                progressStyle() {
+                    const progress = this.totalCycle === 0 ? 0 : ((this.totalCycle - this.totCopy) / this.totalCycle);
+                    const dashOffset = this.circumference * (1 - progress);
+                    return {
+                        strokeDasharray: this.circumference,
+                        strokeDashoffset: dashOffset,
+                    };
+                },
+            },
+            methods: {
+                Tomato() {
+                    if (!this.stopped) return;
+                    this.totalCycle = (this.numberTom * 2) - 1;
+                    this.totCopy = this.totalCycle;
+                    this.startTomato();
+                },
+                startTomato() {
+                    this.stopped = false;
+                    this.runCycle(0);
+                },
+                runCycle(cycle) {
+                    console.log('cycle remaining: ' + this.totCopy);
+                    // loop condition like a 'i < max'
+                    if (cycle > this.totalCycle) {
+                        this.stopped = true;
+                        return;
+                    }
+                    let duration = cycle % 2 === 0 ? this.minTom : this.minPause;
+                    console.log(cycle % 2 === 0 ? 'tomato session' : 'pause');
+                    this.startTimer(duration, () => {
+                        this.totCopy--;
+                        this.runCycle(cycle + 1);
+                    });
+                },
+                startTimer(minutes, callback) {
+                    const endTime = Date.now() + minutes * 60000;
+                    this.interval = setInterval(() => {
+                        const now = Date.now();
+                        const difference = endTime - now;
+
+                        if (difference <= 0 || this.stopped) {
+                            clearInterval(this.interval);
+                            this.timer = '00:00';
+                            if (!this.stopped) {
+                                callback();
+                            }
+                            return;
+                        }
+
+                        const remainingMinutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                        this.timer = `${String(remainingMinutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                    }, 1000);
+                },
+                stopTimer() {
+                    if (this.totalCycle <= 0) {
+                        console.log('Cant stop cycle!');
+                        return;
+                    }
+                    this.stopped = true;
+                    this.timer = '00:00';
+                    this.totalCycle = 0;
+                    this.totCopy = 0;
+                    clearInterval(this.interval);
+                },
+                skipCycle() {
+                    if (this.totalCycle <= 0) {
+                        console.log('Cant skip cycle!');
+                        return;
+                    }
+                    console.log('Cycle skipped!');
+                    let cycle = this.totCopy - 2;
+                    this.stopTimer();
+                    if (cycle > 0) {
+                        this.totCopy = cycle;
+                        this.totalCycle = cycle;
+                        this.startTomato();
+                    } else {
+                        console.log('Tomato aborted because all cycle remaining skipped!');
+                    }
+                },
+                redoCycle() {
+                    if (this.totalCycle <= 0) {
+                        console.log('Cant redo cycle!');
+                        return;
+                    }
+                    console.log('Cycle redone!');
+                    let cycle = this.totCopy;
+                    this.stopTimer();
+                    this.totCopy = cycle + 2;
+                    this.totalCycle = cycle + 2;
+                    this.startTomato();
+                }
+            }
+        });
+        app.mount('#app');
+    </script>
+</body>
+</html>

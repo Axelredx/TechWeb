@@ -1,0 +1,73 @@
+</div> <!--container-closed-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        let currentFocus = -1;
+
+        $('#searchForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent traditional form submission
+            var searchText = $('#searchInput').val().trim(); // Trim the search text
+            if (searchText.length > 2) {
+                searchPosts(searchText);
+            }
+        });
+
+        $('#searchInput').on('input', function () {
+            var searchText = $(this).val().trim(); // Trim the input
+            if (searchText.length > 2) {
+                searchPosts(searchText);
+            } else {
+                $('#resultList').empty().hide();
+                currentFocus = -1;
+            }
+        });
+
+        $('#searchInput').on('keydown', function (e) {
+            var resultList = $('#resultList a');
+            if (resultList.length > 0) {
+                if (e.key === 'ArrowDown') {
+                    currentFocus = (currentFocus + 1) % resultList.length;
+                    resultList[currentFocus].focus();
+                    e.preventDefault();
+                } else if (e.key === 'ArrowUp') {
+                    currentFocus = (currentFocus - 1 + resultList.length) % resultList.length;
+                    resultList[currentFocus].focus();
+                    e.preventDefault();
+                }
+            }
+        });
+        function searchPosts(searchText) {
+            $.ajax({
+                url: '/search',
+                type: 'GET',
+                data: { query: searchText },
+                success: function (data) {
+                    $('#resultList').empty(); // Clear existing results
+                    if (data.length > 0) {
+                        data.forEach(function (item) {
+                            // Construct the correct URL
+                            var encodedTitle = encodeURIComponent(item.heading);
+                            var link = `<a class="list-group-item list-group-item-action" role="option" href="/users/${item.author}/posts/${encodedTitle}" tabindex="0">${item.heading}</a>`;
+                            $('#resultList').append(link);
+                        });
+                        $('#resultList').show(); // Show the list of results
+                        currentFocus = -1;
+                    } else {
+                        $('#resultList').hide(); // Hide the list if there are no results
+                    }
+                },
+                error: function (error) {
+                    console.error('Error fetching search results:', error);
+                    $('#resultList').empty().hide();
+                }
+            });
+        }
+    })
+
+</script>
+</body>
+
+</html>

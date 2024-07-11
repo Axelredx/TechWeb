@@ -1,0 +1,32 @@
+<%- include('partials/header'); -%>
+
+<!-- Display username in greeting -->
+<h1>Home</h1>
+<p>Hi, <%= username %>!</p>
+<p><%= content %></p>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <% posts.forEach(post => { %>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><%= post.heading %></h5>
+                    <% if (post.truncatedContent) { %> <!-- Use the truncated content -->
+                      <p><%= post.truncatedContent %></p>
+                    <% } else { %>
+                      <p>No content available.</p>
+                    <% } %>
+                  </div>
+                  
+                <div class="card-footer">
+                    <small>Written by <%= post.author %> in <%= post.place %> on <%= post.date.toDateString() %></small>
+                    <small>Tags: <%= post.tags.join(', ') %></small>
+                </div>
+                <!-- Modify the link URL -->
+                <button type="button" class="btn btn-outline-info"><a href="/users/<%= post.author %>/posts/<%= encodeURIComponent(post.heading) %>">Read more</a></button>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<%- include('partials/footer'); -%>

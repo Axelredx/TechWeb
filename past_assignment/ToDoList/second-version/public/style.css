@@ -1,0 +1,26 @@
+
+#resultList {
+    position: absolute;
+    top: 100%; /* Aligns directly below the input */
+    left: 0;
+    right: 0;
+    z-index: 1050; /* Keeps it on top of other content */
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 0 0 .25rem .25rem; /* Rounded corners on the bottom */
+    box-shadow: 0 4px 6px rgba(0,0,0,.1); /* Subtle shadow for depth */
+    max-height: 300px; /* Limit the height and make it scrollable */
+    overflow-y: auto;
+}
+
+#searchForm .form-control {
+    border-radius: .25rem .25rem 0 0; /* Rounded corners on the top */
+}
+
+.list-group-item-action:hover {
+    background-color: #f8f9fa; /* Light grey background on hover */
+    color: #0056b3; /* Change text color slightly */
+}
+
+
+
