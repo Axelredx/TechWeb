@@ -1,5 +1,7 @@
 <script setup>
   import { ref } from 'vue';
+  import { toast } from 'vue3-toastify';
+  import 'vue3-toastify/dist/index.css';
 
   const startString = ref('Start!');
   const numberTom = ref(5);
@@ -13,7 +15,56 @@
   const isTomato = ref(false);
   const isPause = ref(false);
 
-  // Functions dedicated to showing SVGs
+  // Func. for Toast
+  const PomodoroToast = () => {
+    toast.info('Pomodoro cycle started!',{
+      autoClose: 2000,
+      theme: 'dark'
+    });
+  };
+
+  const TomatoToast = () => {
+    toast.info('Tomato session started!',{
+      autoClose: 2000,
+      theme: 'dark'
+    });
+  };
+
+  const EndPomodoroToast = () => {
+    toast.success('Pomodoro cycle ended!',{
+      autoClose: 2000,
+      theme: 'dark'
+    });
+  };
+
+  const PauseToast = () => {
+    toast.info('Pause session started!',{
+      autoClose: 2000,
+      theme: 'colored',
+    });
+  };
+
+  const SkipToast = () => {
+    toast.warning('Tomato session skipped! Passing to the next one...',{
+      autoClose: 2000,
+      theme: 'dark'
+    });
+  };
+
+  const RedoToast = () => {
+    toast.warning('Tomato session redone! Added one cycle to the total...',{
+      autoClose: 2000,
+    });
+  };
+
+  const AbortToast = () => {
+    toast.error('Tomato session aborted!',{
+      autoClose: 2000,
+      theme: 'dark',
+    });
+  };
+
+  // Functions dedicated to managing SVGs
   const showTomatoSvg = () => {
     isTomato.value = !isTomato.value;
     isPause.value = false;
@@ -24,11 +75,17 @@
     isTomato.value = false;
   };
 
-  // func. for general tomato cycle
+  const dontShowSvg = () => {
+    isPause.value = false;
+    isTomato.value = false;
+  };
+
+  // Func. for managing tomato cycle
   const Tomato = () => {
     if (!stopped.value) return;
     totalCycle.value = (numberTom.value * 2) - 1;
     totCopy.value = totalCycle.value;
+    PomodoroToast();
     startTomato();
   };
 
@@ -37,18 +94,24 @@
     runCycle(0);
   };
 
-  //func. for regolating cycles
   const runCycle = (cycle) => {
     console.log('cycle remaining: ' + totCopy.value);
     if (cycle > totalCycle.value) {
       stopped.value = true;
+      dontShowSvg();
+      EndPomodoroToast();
       return;
     }
     let duration = cycle % 2 === 0 ? minTom.value : minPause.value;
     if(cycle % 2 === 0){
       showTomatoSvg();
+      // prevent having 2 toast at same time (e.g.: Pomo.toast and Tom.toast)
+      if (cycle > 0){
+        TomatoToast();
+      }
     }else{
       showPauseSvg();
+      PauseToast();
     }
     console.log(cycle % 2 === 0 ? 'tomato session' : 'pause');
     startTimer(duration, () => {
@@ -78,11 +141,10 @@
     }, 1000);
   };
 
-  //fuc.s dedicated to buttons
+  // Func. dedicated to buttons
   const stopTimer = () => {
+    dontShowSvg();
     if (totalCycle.value <= 0) {
-      isTomato.value = false;
-      isPause.value = false;
       console.log('Cant stop cycle!');
       return;
     }
@@ -98,51 +160,46 @@
       console.log('Cant skip cycle!');
       return;
     }
+    SkipToast();
     console.log('Cycle skipped!');
     let cycle = totCopy.value - 2;
     stopTimer();
+    dontShowSvg();
     if (cycle > 0) {
       totCopy.value = cycle;
       totalCycle.value = cycle;
-      isTomato.value = false;
-      isPause.value = false;
       startTomato();
     } else {
-      isTomato.value = false;
-      isPause.value = false;
+      AbortToast();
       console.log('Tomato aborted, all cycle remaining has been skipped!');
     }
   };
 
   const redoCycle = () => {
+    dontShowSvg();
     if (totalCycle.value <= 0) {
-      isTomato.value = false;
-      isPause.value = false;
       console.log('Cant redo cycle!');
       return;
     }
+    RedoToast();
     console.log('Cycle redone! (added a tomato + pause cycle)');
     let cycle = totCopy.value;
     stopTimer();
     totCopy.value = cycle + 2;
     totalCycle.value = cycle + 2;
-    isTomato.value = false;
-    isPause.value = false;
     startTomato();
   };
 
   const abortCycle = () => {
+    dontShowSvg();
     if (totalCycle.value <= 0) {
-      isTomato.value = false;
-      isPause.value = false;
       console.log('Cant abort/stop cycle!');
       return;
     }
+    AbortToast();
     stopTimer();
     console.clear();
     console.log('Cycle! aborted');
-    isTomato.value = false;
-    isPause.value = false;
   }
 
 </script>
@@ -300,6 +357,10 @@
 
     #clock, #clock_tomato, #clock_pause{
       margin-bottom: 2vh;
+    }
+
+    #clock, #clock_tomato, #clock_pause{
+      width: 60vw;
     }
   }
 
